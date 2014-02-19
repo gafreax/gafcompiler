@@ -1,10 +1,11 @@
 <?php 
-namespace gafreax/gafcompiler;
-class gafCompiler 
+namespace gafreax\gafcompiler;
+
+class Compiler 
 {
 
-    final static $DIST_FLAG = '--dist';
-    final static $logo = <<<EOF
+    static $DIST_FLAG = '--dist';
+    static $logo = <<<EOF
 \033[1;32m
    ___       __     ___        ___     ___                      _ _           
   / _ \__ _ / _|   / _ \/\  /\/ _ \   / __\___  _ __ ___  _ __ (_) | ___ _ __ 
@@ -17,27 +18,27 @@ class gafCompiler
 
 EOF;
 
-    public static function exit($message) {
-        echo $this->logo;
+    public static function quit($message) {
+        echo self::$logo;
         echo PHP_EOL . $message . PHP_EOL. PHP_EOL;
         exit();
     }
 
     public static function usage() {
-        exit('Usage: ' . __FILE__ . ' [--dist] <file_to_compile.php> ');
+        self::quit('Usage: ' . __FILE__ . ' [--dist] <file_to_compile.php> ');
     }
 
     public static function not_vald_path() {
-        exit('File not valid');
+        self::quit('File not valid');
     }
 
-    public static function run() {
+    public static function run($argv) {
         if(count($argv) < 2) {
-            usage();
+            self::usage();
         }
         $file = is_file($argv[1])?$argv[1]:null;
         if(!$file) {
-            not_vald_path();
+            self::not_vald_path();
         }
         $dist_flag_pos = array_search(DIST_FLAG,$argv);
         $dest_path = __DIR__;
