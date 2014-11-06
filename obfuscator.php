@@ -1,3 +1,4 @@
+#!/usr/bin/env php
 <?php
 static $logo = <<<EOF
 \033[1;32m
@@ -12,13 +13,14 @@ static $logo = <<<EOF
 
 EOF;
 
-echo $logo;
 if(!isset($argv[1])) {
+    echo $logo;
     echo 'Usage: php ' . __FILE__ . ' <filename.php>' . PHP_EOL;
     exit;
 }
 $filename = $argv[1];
 if(!is_file($filename) || strpos($filename,'php') === false) {
+    echo $logo;
     echo $filename . ' is not a valid php file' . PHP_EOL;
     exit;
 }
